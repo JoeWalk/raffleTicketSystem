@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class Main {
 
+    public static String valid = "false";
+
     public static void main(String[] args) {
         String answer = "";
         ArrayList<String> takenTickets = new ArrayList<>();
@@ -24,7 +26,7 @@ public class Main {
                 switch (answer) {
                     case "A":
                         String valid = "false";
-                        checkTicket(takenTickets,valid);
+                        valid = checkTicket(takenTickets,valid);
                         if (!valid.equals("false")){
                             checkPrime(takenTickets);
                         }
@@ -38,30 +40,65 @@ public class Main {
                 }
             }
         }
+        catch(Exception e){
+            System.out.println("Something went wrong");
+        }
     }
 
         public static ArrayList<String> getTicket (ArrayList<String> takenTickets, String name) {
         Random random = new Random();
         String ticket = Integer.toString(random.nextInt(400) + 1);
         takenTickets.add(name + " " + ticket);
+        System.out.println("Your ticket number is " + ticket);
         return(takenTickets);
     }
 
     public static String checkTicket (ArrayList<String> takenTickets, String valid){
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please type your name and your ticket number");
-        String check = bf.readLine();
-        if (takenTickets.contains(check)){
-            valid = "true";
-            return(valid);
+        try{
+            System.out.println("Please type your name and your ticket number");
+            String check = bf.readLine();
+            if (takenTickets.contains(check)){
+                valid = "true";
+                return(valid);
+            }
+            else{
+                System.out.println("Your ticket number doesn't match your name you scumbag");
+            }
+            return(null);
         }
-        return check;
+        catch(Exception e){
+            System.out.println("Something went wrong");
+        }
+        return(null);
     }
 
     public static String checkPrime (ArrayList<String> takenTickets){
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please type your ticket number");
-        int number = bf.readLine();
-        
+        try{
+            System.out.println("Please type your ticket number");
+            String number = bf.readLine();
+            int num = Integer.parseInt(number);
+            boolean flag = false;
+            for (int i = 2; i <= num / 2; ++i) {
+                if (num % i == 0) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag)
+                System.out.println("Congratulations! You have won.");
+            else
+                System.out.println("Sorry but you haven't won. Feel free to buy another ticket.");
+        }
+        catch(Exception e){
+            System.out.println("Something went wrong");
+        }
+        return(null);
     }
 }
+
+
+
+
